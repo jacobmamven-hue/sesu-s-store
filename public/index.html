@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SESU's Store | Premium Football Gear</title>
+  <meta name="description" content="Shop premium football boots, footballs, and jerseys at SESU's Store. Trending items, latest offers, and low-stock alerts delivered straight to your WhatsApp." />
+  <meta property="og:title" content="SESU's Store | Premium Football Gear" />
+  <meta property="og:description" content="Shop premium football boots, footballs, and jerseys at SESU's Store." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --void: #111111;
+      --elevated: #1a1a1a;
+      --white: #f5f0e8;
+      --gold: #d4af37;
+      --gold-light: #e8c85a;
+      --gold-muted: #8a7a4a;
+      --red: #c9372d;
+      --text-muted: #8a8a8a;
+      --whatsapp: #25d366;
+
+      --background: var(--black);
+      --foreground: var(--white);
+      --card: var(--elevated);
+      --primary: var(--gold);
+      --primary-foreground: var(--black);
+      --muted-foreground: var(--text-muted);
+      --destructive: var(--red);
+      --border: rgba(212, 175, 55, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      line-height: 1.5;
+    }
+
+    .font-display {
+      font-family: "Bebas Neue", sans-serif;
+    }
+
+    .font-mono {
+      font-family: "Space Mono", monospace;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.88);
+      backdrop-filter: blur(12px);
+      padding: 1rem 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: var(--primary);
+    }
+
+    .logo span {
+      color: var(--foreground);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted-foreground);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 2px;
+      background: var(--whatsapp);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      color: #fff;
+      transition: opacity 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      opacity: 0.85;
+    }
+
+    .whatsapp-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+      nav {
+        padding: 1rem 2.5rem;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 5rem;
+      text-align: center;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridShift 20s linear infinite;
+    }
+
+    .hero-glow {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 500px;
+      height: 500px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+    }
+
+    @keyframes gridShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 1rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 14vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: -2px;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-sub {
+      max-width: 28rem;
+      margin: 1.5rem auto 0;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: var(--muted-foreground);
+    }
+
+    .hero-ctas {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 0 30px -5px rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted-foreground);
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 1rem;
+    }
+
+    .container {
+      max-width: 80rem;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--primary);
+    }
+
+    .section-title {
+      margin-top: 0.5rem;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+
+    /* Carousel */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 1rem;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-card {
+      flex: 0 0 100%;
+    }
+
+    @media (min-width: 640px) {
+      .carousel-card {
+        flex: 0 0 calc(50% - 0.5rem);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .carousel-card {
+        flex: 0 0 calc(33.333% - 0.667rem);
+      }
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: var(--card);
+      transition: all 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.25);
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--void);
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 1.5rem;
+      transition: transform 0.5s;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .badge {
+      position: absolute;
+      left: 0.75rem;
+      top: 0.75rem;
+      z-index: 10;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-gold {
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--primary);
+    }
+
+    .badge-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .badge-danger {
+      background: var(--destructive);
+      color: #fff;
+    }
+
+    .product-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem;
+    }
+
+    .product-category {
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted-foreground);
+    }
+
+    .product-name {
+      margin-top: 0.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .product-price {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .price-current {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .price-old {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      text-decoration: line-through;
+    }
+
+    .order-btn {
+      margin-top: 1rem;
+      display: block;
+      width: 100%;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 0.625rem;
+      text-align: center;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      transition: all 0.2s;
+    }
+
+    .order-btn:hover {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: var(--background);
+      color: var(--primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .carousel-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* Showcase */
+    .showcase {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--void);
+      padding: 4rem 1rem;
+    }
+
+    .showcase-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .showcase-inner {
+        flex-direction: row;
+      }
+    }
+
+    .showcase-title {
+      font-size: 2.5rem;
+    }
+
+    .showcase-title span {
+      color: var(--primary);
+    }
+
+    .showcase-desc {
+      max-width: 24rem;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--void);
+      padding: 4rem 1rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .footer-col h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--foreground);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col p {
+      max-width: 20rem;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: var(--muted-foreground);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        text-align: left;
+      }
+    }
+
+    .copyright {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#home" class="logo font-display">SESU<span>'S</span> STORE</a>
+    <ul class="nav-links font-mono">
+      <li><a href="#home">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="https://wa.me/2348179849170?text=Hi%20SESU's%20Store%2C%20I'm%20interested%20in%20your%20products." target="_blank" rel="noopener noreferrer" class="whatsapp-btn font-mono">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+      <span class="hidden-sm">WhatsApp</span>
+    </a>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow font-mono">Premium Quality</p>
+      <h1 class="hero-title font-display">WELCOME TO <span>SESU'S</span> STORE</h1>
+      <p class="hero-sub">Your one-stop store for exclusive football gear. Boots, balls, and jerseys delivered with style.</p>
+      <div class="hero-ctas">
+        <a href="#shop" class="btn-primary font-mono">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Shop Now
+        </a>
+        <a href="https://wa.me/2348179849170?text=Hi%2C%20I%20want%20to%20place%20an%20order%20at%20SESU's%20Store." target="_blank" rel="noopener noreferrer" class="btn-outline font-mono">
+          Order on WhatsApp
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <a href="#shop" class="scroll-hint font-mono">Scroll</a>
+  </section>
+
+  <main id="shop">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle font-mono">Most Wanted</p>
+          <h2 class="section-title font-display">Trending Items</h2>
+        </div>
+        <div class="carousel" id="trending-carousel">
+          <div class="carousel-track">
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-gold font-mono">Trending</span>
+                  <img src="https://images.unsplash.com/photo-1542487354-fe4a8c7895a6?auto=format&fit=crop&w=600&q=80" alt="Pro Strike Boots" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Football Boots</p>
+                  <h3 class="product-name font-mono">Pro Strike Boots</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦89,999</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Pro%20Strike%20Boots%20at%20%E2%82%A689%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-gold font-mono">Best Seller</span>
+                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Jerseys</p>
+                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦34,999</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-gold font-mono">New</span>
+                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Footballs</p>
+                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦24,999</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('trending-carousel', -1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button class="carousel-btn" aria-label="Next" onclick="scrollCarousel('trending-carousel', 1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase">
+      <div class="container showcase-inner">
+        <div>
+          <h2 class="showcase-title font-display">LIMITED <span>DROP</span></h2>
+          <p class="showcase-desc">Grab the latest premium football gear before they sell out. New stock arrives weekly.</p>
+        </div>
+        <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20the%20limited%20drop%20items." target="_blank" rel="noopener noreferrer" class="btn-primary font-mono">
+          View Offers
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle font-mono">Save Big</p>
+          <h2 class="section-title font-display">Latest Offers</h2>
+        </div>
+        <div class="carousel" id="offers-carousel">
+          <div class="carousel-track">
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-primary font-mono">20% OFF</span>
+                  <img src="https://images.unsplash.com/photo-1542487354-fe4a8c7895a6?auto=format&fit=crop&w=600&q=80" alt="Pro Strike Boots" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Football Boots</p>
+                  <h3 class="product-name font-mono">Pro Strike Boots</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦89,999</span>
+                    <span class="price-old font-mono">₦115,000</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Pro%20Strike%20Boots%20at%20%E2%82%A689%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-primary font-mono">22% OFF</span>
+                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Footballs</p>
+                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦24,999</span>
+                    <span class="price-old font-mono">₦32,000</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-primary font-mono">22% OFF</span>
+                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Jerseys</p>
+                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦34,999</span>
+                    <span class="price-old font-mono">₦45,000</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('offers-carousel', -1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button class="carousel-btn" aria-label="Next" onclick="scrollCarousel('offers-carousel', 1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle font-mono">Going Fast</p>
+          <h2 class="section-title font-display">Low In Stock</h2>
+        </div>
+        <div class="carousel" id="lowstock-carousel">
+          <div class="carousel-track">
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-danger font-mono">Low stock</span>
+                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Footballs</p>
+                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦24,999</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-card">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge badge-danger font-mono">Low stock</span>
+                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category font-mono">Jerseys</p>
+                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
+                  <div class="product-price">
+                    <span class="price-current font-display">₦34,999</span>
+                  </div>
+                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('lowstock-carousel', -1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button class="carousel-btn" aria-label="Next" onclick="scrollCarousel('lowstock-carousel', 1)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo font-display">SESU<span>'S</span> STORE</a>
+          <p>Premium football boots, balls, and jerseys. We deliver nationwide and respond fast on WhatsApp.</p>
+        </div>
+        <div class="footer-col">
+          <h3 class="font-mono">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="font-mono">Contact</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="https://wa.me/2348179849170?text=Hi%20SESU's%20Store%2C%20I%20want%20to%20make%20an%20order." target="_blank" rel="noopener noreferrer" class="whatsapp-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                +234 810 561 4254
+              </a>
+            </li>
+            <li><span>Lagos, Nigeria</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2026 SESU's Store. All rights reserved.</p>
+        <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20your%20products." target="_blank" rel="noopener noreferrer" class="whatsapp-btn font-mono">
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .hidden-sm {
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .hidden-sm {
+        display: inline;
+      }
+    }
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted-foreground);
+    }
+    .whatsapp-link svg {
+      color: var(--whatsapp);
+    }
+  </style>
+
+  <script>
+    function scrollCarousel(id, direction) {
+      const carousel = document.getElementById(id);
+      const track = carousel.querySelector('.carousel-track');
+      const card = carousel.querySelector('.carousel-card');
+      const gap = 16;
+      const scrollAmount = card.offsetWidth + gap;
+      track.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

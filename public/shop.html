@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop | SESU's Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#0a0a0a; --void:#111111; --elevated:#1a1a1a; --white:#f5f0e8;
+    --gold:#d4af37; --gold-light:#e8c85a; --red:#c9372d; --text-muted:#8a8a8a; --whatsapp:#25d366;
+    --border:rgba(212,175,55,0.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"DM Sans",sans-serif;background:var(--black);color:var(--white);line-height:1.5;padding-top:112px;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .font-display{font-family:"Bebas Neue",sans-serif;}
+  .font-mono{font-family:"Space Mono",monospace;}
+
+  nav{position:fixed;inset:0 0 auto 0;z-index:60;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1.25rem;flex-wrap:wrap;}
+  .logo{font-size:1.4rem;letter-spacing:3px;color:var(--gold);white-space:nowrap;}
+  .logo span{color:var(--white);}
+  .nav-links{display:flex;gap:1.25rem;list-style:none;flex-wrap:wrap;}
+  .nav-links a{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);transition:color .2s;}
+  .nav-links a:hover, .nav-links a.active{color:var(--gold);}
+  .search-bar{flex:1 1 260px;display:flex;max-width:520px;}
+  .search-bar input{flex:1;background:var(--elevated);border:1px solid var(--border);border-right:none;color:var(--white);padding:0.55rem 0.8rem;font-family:"DM Sans",sans-serif;font-size:0.85rem;}
+  .search-bar input:focus{outline:none;border-color:var(--gold);}
+  .search-bar button{background:var(--gold);border:none;color:#000;padding:0 0.9rem;cursor:pointer;font-weight:700;}
+  .cart-btn{position:relative;display:inline-flex;align-items:center;gap:0.4rem;border:1px solid var(--border);color:var(--gold);padding:0.5rem 0.8rem;font-size:0.75rem;cursor:pointer;background:transparent;font-family:"Space Mono",monospace;letter-spacing:1px;}
+  .cart-btn:hover{background:rgba(212,175,55,0.1);}
+  .cart-count{position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.65rem;display:flex;align-items:center;justify-content:center;}
+  .subnav{display:flex;gap:1rem;overflow-x:auto;padding:0.5rem 1.25rem;border-top:1px solid var(--border);}
+  .subnav button{background:none;border:none;color:var(--text-muted);font-family:"Space Mono",monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;cursor:pointer;padding:0.3rem 0.6rem;transition:.2s;}
+  .subnav button.active, .subnav button:hover{color:var(--gold);border-bottom:2px solid var(--gold);}
+
+  .hero-strip{background:linear-gradient(120deg,var(--void),var(--black));border-bottom:1px solid var(--border);padding:2rem 1.25rem;text-align:center;}
+  .hero-strip h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(2.2rem,6vw,3.5rem);letter-spacing:1px;}
+  .hero-strip h1 span{color:var(--gold);}
+  .hero-strip p{color:var(--text-muted);font-size:0.85rem;margin-top:0.4rem;}
+
+  .layout{max-width:90rem;margin:0 auto;padding:2rem 1.25rem;display:grid;grid-template-columns:1fr;gap:1.5rem;}
+  @media(min-width:900px){.layout{grid-template-columns:230px 1fr;}}
+
+  .filters{background:var(--elevated);border:1px solid var(--border);border-radius:6px;padding:1.25rem;align-self:start;position:sticky;top:180px;}
+  .filters h3{font-family:"Space Mono",monospace;font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:0.75rem;}
+  .filter-group{margin-bottom:1.5rem;}
+  .filter-group label{display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;cursor:pointer;}
+  .filter-group input[type=radio]{accent-color:var(--gold);}
+  .price-row{display:flex;gap:0.5rem;}
+  .price-row input{width:100%;background:var(--void);border:1px solid var(--border);color:var(--white);padding:0.4rem;font-size:0.8rem;font-family:"Space Mono",monospace;}
+  .clear-btn{width:100%;padding:0.5rem;background:none;border:1px solid var(--border);color:var(--text-muted);font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;}
+  .clear-btn:hover{color:var(--gold);border-color:var(--gold);}
+
+  .results-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;}
+  .results-bar select{background:var(--elevated);border:1px solid var(--border);color:var(--white);padding:0.45rem 0.6rem;font-family:"Space Mono",monospace;font-size:0.75rem;}
+  .results-count{font-size:0.8rem;color:var(--text-muted);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;}
+  .card{background:var(--elevated);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;transition:.25s;}
+  .card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 10px 30px -10px rgba(212,175,55,.25);}
+  .card-img{position:relative;aspect-ratio:1;background:var(--void);}
+  .card-img img{width:100%;height:100%;object-fit:contain;padding:1.25rem;}
+  .badge{position:absolute;top:0.6rem;left:0.6rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:1px;padding:0.2rem 0.5rem;font-family:"Space Mono",monospace;}
+  .badge.gold{background:rgba(212,175,55,.15);color:var(--gold);}
+  .badge.danger{background:var(--red);color:#fff;}
+  .card-body{padding:1rem;display:flex;flex-direction:column;flex:1;}
+  .cat{font-size:0.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);}
+  .name{font-family:"Space Mono",monospace;font-size:0.95rem;margin:0.3rem 0;min-height:2.4em;}
+  .stars{color:var(--gold);font-size:0.75rem;margin-bottom:0.3rem;}
+  .stars span{color:var(--text-muted);font-family:"Space Mono",monospace;margin-left:0.3rem;}
+  .price-row2{display:flex;align-items:baseline;gap:0.6rem;margin:0.2rem 0 0.8rem;}
+  .price-now{font-family:"Bebas Neue",sans-serif;font-size:1.4rem;color:var(--gold);}
+  .price-old{font-size:0.7rem;color:var(--text-muted);text-decoration:line-through;font-family:"Space Mono",monospace;}
+  .stock{font-size:0.7rem;margin-bottom:0.6rem;font-family:"Space Mono",monospace;}
+  .stock.low{color:var(--red);}
+  .stock.ok{color:#7cbf7c;}
+  .add-btn{margin-top:auto;border:1px solid var(--gold);color:var(--gold);background:transparent;padding:0.55rem;font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;transition:.2s;font-family:"Space Mono",monospace;}
+  .add-btn:hover{background:var(--gold);color:#000;}
+  .empty-state{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--text-muted);}
+
+  /* cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;}
+  .overlay.show{display:block;}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(380px,100%);background:var(--void);border-left:1px solid var(--border);z-index:95;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;}
+  .drawer.show{transform:translateX(0);}
+  .drawer-head{padding:1.2rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .drawer-head h2{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;color:var(--gold);}
+  .drawer-close{background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;}
+  .drawer-items{flex:1;overflow-y:auto;padding:1rem;}
+  .cart-item{display:flex;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
+  .cart-item img{width:56px;height:56px;object-fit:contain;background:var(--elevated);border-radius:4px;padding:0.3rem;}
+  .cart-item .ci-info{flex:1;}
+  .cart-item .ci-info h4{font-size:0.85rem;font-family:"Space Mono",monospace;}
+  .qty-row{display:flex;align-items:center;gap:0.5rem;margin-top:0.4rem;}
+  .qty-row button{width:24px;height:24px;background:var(--elevated);border:1px solid var(--border);color:var(--gold);cursor:pointer;}
+  .qty-row span{font-family:"Space Mono",monospace;}
+  .remove-link{font-size:0.7rem;color:var(--red);cursor:pointer;margin-left:auto;}
+  .drawer-foot{padding:1.2rem;border-top:1px solid var(--border);}
+  .drawer-total{display:flex;justify-content:space-between;font-family:"Space Mono",monospace;margin-bottom:1rem;font-size:1rem;}
+  .checkout-btn{display:block;width:100%;text-align:center;padding:0.8rem;background:var(--whatsapp);color:#fff;font-size:0.8rem;text-transform:uppercase;letter-spacing:1.5px;border:none;cursor:pointer;border-radius:4px;}
+  .checkout-btn:hover{opacity:.9;}
+
+  footer{border-top:1px solid var(--border);padding:2.5rem 1.25rem;text-align:center;color:var(--text-muted);font-size:0.8rem;margin-top:2rem;}
+  footer a{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <a href="shop.html" class="logo font-display">SESU<span>'S</span> STORE</a>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search boots, jerseys, balls..." />
+      <button onclick="applyFilters()">🔍</button>
+    </div>
+    <ul class="nav-links font-mono">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="affiliate.html">Affiliate Deals</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="cart-btn" onclick="openCart()">
+      🛒 Cart <span id="cartCount" class="cart-count">0</span>
+    </button>
+  </div>
+  <div class="subnav font-mono" id="categoryTabs"></div>
+</nav>
+
+<section class="hero-strip">
+  <h1 class="font-display">SHOP <span>ALL GEAR</span></h1>
+  <p>Boots, balls and jerseys — order in one tap, pay on delivery or via transfer.</p>
+</section>
+
+<div class="layout">
+  <aside class="filters">
+    <h3>Category</h3>
+    <div class="filter-group" id="catFilterGroup"></div>
+
+    <h3>Price (₦)</h3>
+    <div class="filter-group">
+      <div class="price-row">
+        <input type="number" id="minPrice" placeholder="Min" />
+        <input type="number" id="maxPrice" placeholder="Max" />
+      </div>
+    </div>
+
+    <h3>Availability</h3>
+    <div class="filter-group">
+      <label><input type="checkbox" id="inStockOnly" /> In stock only</label>
+    </div>
+
+    <button class="clear-btn font-mono" onclick="clearFilters()">Clear filters</button>
+  </aside>
+
+  <main>
+    <div class="results-bar">
+      <span class="results-count font-mono" id="resultsCount">Loading products…</span>
+      <select id="sortSelect" onchange="applyFilters()">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A–Z</option>
+      </select>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2026 SESU's Store · <a href="admin.html">Admin</a> · <a href="contact.html">Contact us</a></p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h2 class="font-display">YOUR CART</h2>
+    <button class="drawer-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="drawer-items" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Total</span><span id="cartTotal" class="font-display" style="color:var(--gold);font-size:1.3rem;">₦0</span></div>
+    <button class="checkout-btn font-mono" onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_NUMBER = "2348179849170";
+let ALL_PRODUCTS = [];
+let cart = {}; // id -> qty
+let activeCategory = "All";
+
+
+async function getProducts(){
+  try{
+    const res = await fetch('/api/products');
+
+    if(!res.ok){
+      throw new Error('Could not load products');
+    }
+
+    return await res.json();
+  }catch(e){
+    console.error('Product loading error:', e);
+    return [];
+}
+}
+async function saveProducts(list){
+  try{ await window.storage.set('sesu-products', JSON.stringify(list), true); }catch(e){ console.error(e); }
+}
+
+async function init(){
+  ALL_PRODUCTS = await getProducts();
+if(!ALL_PRODUCTS.length){
+  console.log("No products found in database.");
+}
+  }
+  buildCategoryUI();
+  applyFilters();
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+}
+
+function buildCategoryUI(){
+  const cats = ["All", ...new Set(ALL_PRODUCTS.map(p=>p.category))];
+  document.getElementById('categoryTabs').innerHTML = cats.map(c =>
+    `<button class="${c===activeCategory?'active':''}" onclick="setCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`
+  ).join('');
+  document.getElementById('catFilterGroup').innerHTML = cats.filter(c=>c!=="All").map(c =>
+    `<label><input type="radio" name="catRadio" value="${c}" onchange="setCategory('${c.replace(/'/g,"\\'")}')"> ${c}</label>`
+  ).join('') + `<label><input type="radio" name="catRadio" value="All" checked onchange="setCategory('All')"> All items</label>`;
+}
+
+function setCategory(c){
+  activeCategory = c;
+  document.querySelectorAll('.subnav button').forEach(b=>b.classList.toggle('active', b.textContent===c));
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const min = parseFloat(document.getElementById('minPrice').value) || 0;
+  const max = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+  const inStockOnly = document.getElementById('inStockOnly').checked;
+  const sort = document.getElementById('sortSelect').value;
+
+  let list = ALL_PRODUCTS.filter(p=>{
+    if(activeCategory !== "All" && p.category !== activeCategory) return false;
+    if(q && !p.name.toLowerCase().includes(q) && !p.category.toLowerCase().includes(q)) return false;
+    if(p.price < min || p.price > max) return false;
+    if(inStockOnly && (!p.stock || p.stock <= 0)) return false;
+    return true;
+  });
+
+  if(sort==="price-asc") list.sort((a,b)=>a.price-b.price);
+  if(sort==="price-desc") list.sort((a,b)=>b.price-a.price);
+  if(sort==="name-asc") list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  renderGrid(list);
+}
+
+function renderGrid(list){
+  document.getElementById('resultsCount').textContent = `${list.length} item${list.length===1?'':'s'} found`;
+  const grid = document.getElementById('productGrid');
+  if(!list.length){
+    grid.innerHTML = `<div class="empty-state font-mono">No products match those filters yet.<br>Try clearing a filter or check back soon.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(p=>{
+    const stockLabel = p.stock<=0 ? '<span class="stock low font-mono">Out of stock</span>'
+      : p.stock<=4 ? `<span class="stock low font-mono">Only ${p.stock} left</span>`
+      : `<span class="stock ok font-mono">In stock</span>`;
+    return `
+    <div class="card">
+      <div class="card-img">
+        ${p.badge? `<span class="badge ${p.stock<=4&&p.stock>0?'danger':'gold'} font-mono">${p.badge}</span>`:''}
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400/1a1a1a/d4af37?text=No+Image'"/>
+      </div>
+      <div class="card-body">
+        <p class="cat font-mono">${p.category}</p>
+        <h3 class="name">${p.name}</h3>
+        <div class="stars">★★★★☆ <span>(${(20+Math.abs(hashCode(p.id))%180)})</span></div>
+        <div class="price-row2">
+          <span class="price-now">₦${p.price.toLocaleString()}</span>
+          ${p.oldPrice? `<span class="price-old">₦${p.oldPrice.toLocaleString()}</span>`:''}
+        </div>
+        ${stockLabel}
+        <button class="add-btn" ${p.stock<=0?'disabled style="opacity:.4;cursor:not-allowed;"':''} onclick="addToCart('${p.id}')">Add to Cart</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function hashCode(str){ let h=0; for(let i=0;i<str.length;i++){h=Math.imul(31,h)+str.charCodeAt(i)|0;} return h; }
+
+function addToCart(id){
+  cart[id] = (cart[id]||0)+1;
+  updateCartUI();
+  openCart();
+}
+function changeQty(id, delta){
+  cart[id] = (cart[id]||0)+delta;
+  if(cart[id]<=0) delete cart[id];
+  updateCartUI();
+}
+function removeFromCart(id){ delete cart[id]; updateCartUI(); }
+
+function updateCartUI(){
+  const ids = Object.keys(cart);
+  const count = ids.reduce((s,id)=>s+cart[id],0);
+  document.getElementById('cartCount').textContent = count;
+  const itemsEl = document.getElementById('cartItems');
+  if(!ids.length){
+    itemsEl.innerHTML = `<p style="color:var(--text-muted);font-size:0.85rem;">Your cart is empty. Add something nice.</p>`;
+  } else {
+    itemsEl.innerHTML = ids.map(id=>{
+      const p = ALL_PRODUCTS.find(x=>x.id===id);
+      if(!p) return '';
+      return `
+      <div class="cart-item">
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/100x100/1a1a1a/d4af37?text=No+Image'"/>
+        <div class="ci-info">
+          <h4>${p.name}</h4>
+          <div class="qty-row">
+            <button onclick="changeQty('${id}',-1)">−</button>
+            <span>${cart[id]}</span>
+            <button onclick="changeQty('${id}',1)">+</button>
+            <span class="remove-link font-mono" onclick="removeFromCart('${id}')">Remove</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  const total = ids.reduce((s,id)=>{
+    const p = ALL_PRODUCTS.find(x=>x.id===id);
+    return s + (p? p.price*cart[id] : 0);
+  },0);
+  document.getElementById('cartTotal').textContent = `₦${total.toLocaleString()}`;
+}
+
+function openCart(){ document.getElementById('cartDrawer').classList.add('show'); document.getElementById('overlay').classList.add('show'); }
+function closeCart(){ document.getElementById('cartDrawer').classList.remove('show'); document.getElementById('overlay').classList.remove('show'); }
+
+function checkoutWhatsApp(){
+  const ids = Object.keys(cart);
+  if(!ids.length){ alert('Your cart is empty.'); return; }
+  let msg = "Hi SESU's Store, I'd like to order:%0A";
+  let total = 0;
+  ids.forEach(id=>{
+    const p = ALL_PRODUCTS.find(x=>x.id===id);
+    if(!p) return;
+    const lineTotal = p.price*cart[id];
+    total += lineTotal;
+    msg += `- ${p.name} x${cart[id]} (₦${lineTotal.toLocaleString()})%0A`;
+  });
+  msg += `%0ATotal: ₦${total.toLocaleString()}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+}
+
+function clearFilters(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('minPrice').value='';
+  document.getElementById('maxPrice').value='';
+  document.getElementById('inStockOnly').checked=false;
+  document.getElementById('sortSelect').value='default';
+  setCategory('All');
+}
+
+init();
+</script>
+</body>
+</html>

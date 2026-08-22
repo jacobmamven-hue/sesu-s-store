@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Affiliate Deals | SESU's Store</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --black:#0a0a0a;
+    --void:#111111;
+    --elevated:#1a1a1a;
+    --white:#f5f0e8;
+    --gold:#d4af37;
+    --gold-light:#e8c85a;
+    --red:#c9372d;
+    --green:#25d366;
+    --text-muted:#8a8a8a;
+    --border:rgba(212,175,55,0.15);
+  }
+
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  html{
+    scroll-behavior:smooth;
+  }
+
+  body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--black);
+    color:var(--white);
+    line-height:1.5;
+    padding-top:112px;
+  }
+
+  a{
+    text-decoration:none;
+    color:inherit;
+  }
+
+  img{
+    max-width:100%;
+    display:block;
+  }
+
+  .font-display{
+    font-family:"Bebas Neue",sans-serif;
+  }
+
+  .font-mono{
+    font-family:"Space Mono",monospace;
+  }
+
+  /* =========================
+     NAVIGATION
+  ========================== */
+
+  nav{
+    position:fixed;
+    inset:0 0 auto 0;
+    z-index:60;
+    background:rgba(10,10,10,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+
+  .nav-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:.9rem 1.25rem;
+    flex-wrap:wrap;
+  }
+
+  .logo{
+    font-size:1.4rem;
+    letter-spacing:3px;
+    color:var(--gold);
+    white-space:nowrap;
+  }
+
+  .logo span{
+    color:var(--white);
+  }
+
+  .nav-links{
+    display:flex;
+    gap:1.25rem;
+    list-style:none;
+    flex-wrap:wrap;
+  }
+
+  .nav-links a{
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:var(--text-muted);
+    transition:.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active{
+    color:var(--gold);
+  }
+
+  .affiliate-nav-btn{
+    border:1px solid var(--gold);
+    color:var(--gold)!important;
+    padding:.35rem .55rem;
+  }
+
+  .affiliate-nav-btn:hover{
+    background:var(--gold);
+    color:#000!important;
+  }
+
+  /* =========================
+     HERO
+  ========================== */
+
+  .hero{
+    position:relative;
+    overflow:hidden;
+    min-height:440px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:5rem 1.25rem;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(circle at 50% 20%,rgba(212,175,55,.13),transparent 35%),
+      linear-gradient(135deg,#161616,#080808);
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(rgba(212,175,55,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(212,175,55,.025) 1px,transparent 1px);
+    background-size:45px 45px;
+    pointer-events:none;
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    max-width:850px;
+  }
+
+  .eyebrow{
+    color:var(--gold);
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    margin-bottom:.75rem;
+  }
+
+  .hero h1{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(3.5rem,10vw,7rem);
+    line-height:.9;
+    letter-spacing:2px;
+  }
+
+  .hero h1 span{
+    color:var(--gold);
+  }
+
+  .hero p{
+    max-width:650px;
+    margin:1.25rem auto 0;
+    color:var(--text-muted);
+    font-size:1rem;
+  }
+
+  .hero-actions{
+    display:flex;
+    justify-content:center;
+    gap:.75rem;
+    flex-wrap:wrap;
+    margin-top:1.5rem;
+  }
+
+  .hero-btn{
+    padding:.8rem 1.2rem;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-family:"Space Mono",monospace;
+    font-size:.7rem;
+    border:1px solid var(--gold);
+    transition:.2s;
+  }
+
+  .hero-btn.primary{
+    background:var(--gold);
+    color:#000;
+  }
+
+  .hero-btn.primary:hover{
+    background:var(--gold-light);
+  }
+
+  .hero-btn.secondary{
+    color:var(--gold);
+  }
+
+  .hero-btn.secondary:hover{
+    background:rgba(212,175,55,.1);
+  }
+
+  /* =========================
+     NOTICE BAR
+  ========================== */
+
+  .notice{
+    border-bottom:1px solid var(--border);
+    background:var(--void);
+    padding:.75rem 1.25rem;
+    text-align:center;
+    color:var(--text-muted);
+    font-size:.75rem;
+  }
+
+  .notice strong{
+    color:var(--gold);
+  }
+
+  /* =========================
+     SECTION
+  ========================== */
+
+  .section{
+    max-width:90rem;
+    margin:0 auto;
+    padding:3.5rem 1.25rem;
+  }
+
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:1rem;
+    margin-bottom:1.5rem;
+    flex-wrap:wrap;
+  }
+
+  .section-label{
+    color:var(--gold);
+    text-transform:uppercase;
+    font-size:.65rem;
+    letter-spacing:2px;
+    margin-bottom:.3rem;
+  }
+
+  .section-title{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:2.8rem;
+    letter-spacing:1px;
+  }
+
+  .section-title span{
+    color:var(--gold);
+  }
+
+  .section-description{
+    max-width:500px;
+    color:var(--text-muted);
+    font-size:.85rem;
+  }
+
+  /* =========================
+     CATEGORY TABS
+  ========================== */
+
+  .tabs{
+    display:flex;
+    gap:.5rem;
+    overflow-x:auto;
+    margin-bottom:1.5rem;
+    padding-bottom:.25rem;
+  }
+
+  .tab{
+    white-space:nowrap;
+    background:var(--elevated);
+    border:1px solid var(--border);
+    color:var(--text-muted);
+    padding:.55rem .8rem;
+    cursor:pointer;
+    font-family:"Space Mono",monospace;
+    font-size:.65rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  .tab:hover,
+  .tab.active{
+    color:#000;
+    background:var(--gold);
+    border-color:var(--gold);
+  }
+
+  /* =========================
+     AFFILIATE GRID
+  ========================== */
+
+  .affiliate-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:1.25rem;
+  }
+
+  .deal-card{
+    background:var(--elevated);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:.25s;
+  }
+
+  .deal-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold);
+    box-shadow:0 12px 35px -12px rgba(212,175,55,.3);
+  }
+
+  .deal-image{
+    position:relative;
+    aspect-ratio:1/1;
+    background:var(--void);
+    overflow:hidden;
+  }
+
+  .deal-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.3s;
+  }
+
+  .deal-card:hover .deal-image img{
+    transform:scale(1.04);
+  }
+
+  .deal-badge{
+    position:absolute;
+    top:.65rem;
+    left:.65rem;
+    padding:.25rem .5rem;
+    background:var(--gold);
+    color:#000;
+    font-family:"Space Mono",monospace;
+    font-size:.58rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    z-index:2;
+  }
+
+  .deal-badge.red{
+    background:var(--red);
+    color:#fff;
+  }
+
+  .commission{
+    position:absolute;
+    bottom:.65rem;
+    right:.65rem;
+    background:rgba(10,10,10,.9);
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:.3rem .5rem;
+    font-family:"Space Mono",monospace;
+    font-size:.58rem;
+  }
+
+  .deal-body{
+    padding:1rem;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .deal-category{
+    color:var(--text-muted);
+    font-size:.6rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  .deal-name{
+    font-family:"Space Mono",monospace;
+    font-size:.95rem;
+    margin:.35rem 0;
+  }
+
+  .deal-description{
+    color:var(--text-muted);
+    font-size:.75rem;
+    line-height:1.6;
+    margin-bottom:.8rem;
+  }
+
+  .rating{
+    color:var(--gold);
+    font-size:.75rem;
+    margin-bottom:.6rem;
+  }
+
+  .rating span{
+    color:var(--text-muted);
+    font-family:"Space Mono",monospace;
+    margin-left:.25rem;
+  }
+
+  .deal-price{
+    display:flex;
+    align-items:baseline;
+    gap:.55rem;
+    margin-bottom:1rem;
+  }
+
+  .current-price{
+    font-family:"Bebas Neue",sans-serif;
+    color:var(--gold);
+    font-size:1.5rem;
+  }
+
+  .old-price{
+    text-decoration:line-through;
+    color:var(--text-muted);
+    font-size:.7rem;
+    font-family:"Space Mono",monospace;
+  }
+
+  .deal-btn{
+    margin-top:auto;
+    display:block;
+    width:100%;
+    text-align:center;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    background:transparent;
+    padding:.6rem;
+    font-family:"Space Mono",monospace;
+    font-size:.65rem;
+    text-transform:uppercase;
+    letter-spacing:1.3px;
+    cursor:pointer;
+    transition:.2s;
+  }
+
+  .deal-btn:hover{
+    background:var(--gold);
+    color:#000;
+  }
+
+  /* =========================
+     HOW IT WORKS
+  ========================== */
+
+  .steps-section{
+    background:var(--void);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.25rem;
+  }
+
+  .step{
+    border:1px solid var(--border);
+    background:var(--elevated);
+    padding:1.5rem;
+    position:relative;
+  }
+
+  .step-number{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:3rem;
+    color:rgba(212,175,55,.2);
+    line-height:1;
+  }
+
+  .step h3{
+    font-family:"Space Mono",monospace;
+    color:var(--gold);
+    font-size:.85rem;
+    margin:.4rem 0;
+    text-transform:uppercase;
+  }
+
+  .step p{
+    color:var(--text-muted);
+    font-size:.8rem;
+  }
+
+  /* =========================
+     PROMO BANNER
+  ========================== */
+
+  .promo{
+    border:1px solid var(--gold);
+    background:
+      radial-gradient(circle at 90% 50%,rgba(212,175,55,.15),transparent 35%),
+      var(--elevated);
+    padding:2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+  }
+
+  .promo h2{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:2.5rem;
+  }
+
+  .promo h2 span{
+    color:var(--gold);
+  }
+
+  .promo p{
+    color:var(--text-muted);
+    font-size:.8rem;
+    max-width:650px;
+  }
+
+  .promo-btn{
+    white-space:nowrap;
+    background:var(--gold);
+    color:#000;
+    border:none;
+    padding:.75rem 1rem;
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    font-size:.7rem;
+    letter-spacing:1px;
+    cursor:pointer;
+  }
+
+  .promo-btn:hover{
+    background:var(--gold-light);
+  }
+
+  /* =========================
+     FOOTER
+  ========================== */
+
+  footer{
+    border-top:1px solid var(--border);
+    padding:2.5rem 1.25rem;
+    text-align:center;
+    color:var(--text-muted);
+    font-size:.8rem;
+  }
+
+  footer a{
+    color:var(--gold);
+  }
+
+  /* =========================
+     RESPONSIVE
+  ========================== */
+
+  @media(max-width:800px){
+    .steps{
+      grid-template-columns:1fr;
+    }
+  }
+
+  @media(max-width:600px){
+    body{
+      padding-top:150px;
+    }
+
+    .nav-top{
+      justify-content:center;
+    }
+
+    .nav-links{
+      justify-content:center;
+      width:100%;
+      gap:.8rem;
+    }
+
+    .hero{
+      min-height:400px;
+      padding:4rem 1rem;
+    }
+
+    .hero h1{
+      font-size:4rem;
+    }
+
+    .section{
+      padding:2.5rem 1rem;
+    }
+
+    .promo{
+      padding:1.5rem;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================== -->
+
+<nav>
+  <div class="nav-top">
+
+    <a href="shop.html" class="logo font-display">
+      SESU<span>'S</span> STORE
+    </a>
+
+    <ul class="nav-links font-mono">
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li>
+        <a href="shop.html">Shop</a>
+      </li>
+
+      <li>
+        <a href="affiliate.html" class="active affiliate-nav-btn">
+          Affiliate Deals
+        </a>
+      </li>
+
+      <li>
+        <a href="contact.html">Contact</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
+
+<!-- =========================
+     HERO
+========================== -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <p class="eyebrow font-mono">
+      SESU'S STORE // AFFILIATE PICKS
+    </p>
+
+    <h1>
+      DEALS WORTH<br>
+      <span>CLICKING</span>
+    </h1>
+
+    <p>
+      We hunt down quality football gear, sports essentials and
+      useful deals from trusted stores — so you don't have to.
+    </p>
+
+    <div class="hero-actions">
+
+      <a href="#deals" class="hero-btn primary">
+        Explore Deals
+      </a>
+
+      <a href="#how-it-works" class="hero-btn secondary">
+        How It Works
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     NOTICE
+========================== -->
+
+<div class="notice font-mono">
+  <strong>Affiliate disclosure:</strong>
+  Some links on this page may earn SESU's Store a small commission at no extra cost to you.
+</div>
+
+
+<!-- =========================
+     DEALS
+========================== -->
+
+<section class="section" id="deals">
+
+  <div class="section-head">
+
+    <div>
+      <p class="section-label font-mono">
+        Hand-picked offers
+      </p>
+
+      <h2 class="section-title">
+        TODAY'S <span>TOP DEALS</span>
+      </h2>
+    </div>
+
+    <p class="section-description">
+      Featured products and offers selected for football lovers,
+      athletes and everyday sports fans.
+    </p>
+
+  </div>
+
+
+  <!-- FILTER TABS -->
+
+  <div class="tabs font-mono">
+
+    <button class="tab active" onclick="filterDeals('All',this)">
+      All Deals
+    </button>
+
+    <button class="tab" onclick="filterDeals('Boots',this)">
+      Boots
+    </button>
+
+    <button class="tab" onclick="filterDeals('Jerseys',this)">
+      Jerseys
+    </button>
+
+    <button class="tab" onclick="filterDeals('Training',this)">
+      Training
+    </button>
+
+    <button class="tab" onclick="filterDeals('Accessories',this)">
+      Accessories
+    </button>
+
+    <button class="tab" onclick="filterDeals('Fitness',this)">
+      Fitness
+    </button>
+
+  </div>
+
+
+  <!-- DEAL CARDS -->
+
+  <div class="affiliate-grid" id="affiliateGrid"></div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================== -->
+
+<section class="steps-section" id="how-it-works">
+
+  <div class="section">
+
+    <div class="section-head">
+
+      <div>
+        <p class="section-label font-mono">
+          Simple process
+        </p>
+
+        <h2 class="section-title">
+          HOW IT <span>WORKS</span>
+        </h2>
+      </div>
+
+      <p class="section-description">
+        No complicated process. Find a deal, follow the link,
+        complete your purchase and enjoy your gear.
+      </p>
+
+    </div>
+
+
+    <div class="steps">
+
+      <div class="step">
+
+        <div class="step-number">01</div>
+
+        <h3>Find a Deal</h3>
+
+        <p>
+          Browse our hand-picked affiliate offers and find
+          something that matches what you're looking for.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">02</div>
+
+        <h3>Click & Shop</h3>
+
+        <p>
+          Click the deal button and you'll be taken to the
+          partner store where you can view the product and buy.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">03</div>
+
+        <h3>Enjoy Your Gear</h3>
+
+        <p>
+          Complete your purchase directly with the retailer.
+          We may receive a small commission from qualifying purchases.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PROMO
+========================== -->
+
+<section class="section">
+
+  <div class="promo">
+
+    <div>
+
+      <h2>
+        WANT MORE <span>DEALS?</span>
+      </h2>
+
+      <p>
+        New offers can be added regularly. Check back often for
+        discounted football boots, jerseys, training equipment,
+        fitness products and other sports essentials.
+      </p>
+
+    </div>
+
+    <a href="#deals" class="promo-btn">
+      Browse Deals
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer>
+
+  <p>
+    &copy; 2026 SESU's Store ·
+    <a href="shop.html">Shop</a> ·
+    <a href="affiliate.html">Affiliate Deals</a> ·
+    <a href="contact.html">Contact us</a> ·
+    <a href="admin.html">Admin</a>
+  </p>
+
+  <p style="margin-top:.5rem;">
+    Affiliate links may earn SESU's Store a commission.
+  </p>
+
+</footer>
+
+
+<script>
+
+
+
+
+function renderDeals(list){
+
+  const grid = document.getElementById("affiliateGrid");
+
+  if(!list.length){
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:3rem 1rem;
+        color:var(--text-muted);
+        font-family:'Space Mono',monospace;
+      ">
+        No deals found in this category.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML = list.map(deal => `
+
+    <article class="deal-card">
+
+      <div class="deal-image">
+
+        <span class="deal-badge ${deal.badge==="Hot Deal" ? "red" : ""}">
+          ${deal.badge}
+        </span>
+
+        <span class="commission">
+          ${deal.commission} commission
+        </span>
+
+        <img
+          src="${deal.image}"
+          alt="${deal.name}"
+          loading="lazy"
+          onerror="this.src='https://placehold.co/700x700/1a1a1a/d4af37?text=SESU%27S+STORE'"
+        />
+
+      </div>
+
+
+      <div class="deal-body">
+
+        <p class="deal-category font-mono">
+          ${deal.category}
+        </p>
+
+        <h3 class="deal-name">
+          ${deal.name}
+        </h3>
+
+        <p class="deal-description">
+          ${deal.description}
+        </p>
+
+        <div class="rating">
+          ${deal.rating}
+          <span>(${deal.reviews})</span>
+        </div>
+
+        <div class="deal-price">
+
+          <span class="current-price">
+            ${deal.price}
+          </span>
+
+          <span class="old-price">
+            ${deal.oldPrice}
+          </span>
+
+        </div>
+
+        <button
+          class="deal-btn"
+          onclick="visitDeal('${deal.url}')"
+        >
+          View Deal →
+        </button>
+
+      </div>
+
+    </article>
+
+  `).join("");
+
+}
+
+
+function filterDeals(category, button) {
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab => tab.classList.remove("active"));
+
+  button.classList.add("active");
+
+  const deals = window.AFFILIATE_DEALS || [];
+
+  if (category === "All") {
+    renderDeals(deals);
+    return;
+  }
+
+  const filtered = deals.filter(
+    deal => deal.category === category
+  );
+
+  renderDeals(filtered);
+}
+
+
+function visitDeal(url){
+
+  /*
+    Replace the "#" URLs inside AFFILIATE_DEALS
+    with your real affiliate URLs.
+
+    Example:
+
+    url:"https://example.com/product?affiliate=YOUR_ID"
+  */
+
+  if(!url || url==="#"){
+    alert(
+      "This affiliate deal does not have a partner link yet. " +
+      "Add the affiliate URL to this product in the AFFILIATE_DEALS array."
+    );
+
+    return;
+  }
+
+  window.open(url,"_blank","noopener,noreferrer");
+
+}
+
+
+async function loadAffiliateDeals() {
+  try {
+    const response = await fetch("/api/affiliates");
+
+    if (!response.ok) {
+      throw new Error("Could not load affiliate deals");
+    }
+    const deals = await response.json();
+
+console.log("API DATA:", deals);
+
+window.AFFILIATE_DEALS = deals;
+
+console.log("SAVED AFFILIATES:", window.AFFILIATE_DEALS);
+
+renderDeals(deals);
+
+
+  } catch (error) {
+    console.error(error);
+
+    document.getElementById("affiliateGrid").innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:3rem 1rem;
+        color:var(--text-muted);
+        font-family:'Space Mono',monospace;
+      ">
+        Could not load affiliate deals.
+      </div>
+    `;
+  }
+}
+
+async function loadAffiliateDeals() {
+  try {
+    const response = await fetch("/api/affiliates");
+
+    if (!response.ok) {
+      throw new Error("Could not load affiliate deals");
+    }
+
+    const deals = await response.json();
+
+    window.AFFILIATE_DEALS = deals;
+
+    console.log("DATABASE AFFILIATES:", window.AFFILIATE_DEALS);
+
+    renderDeals(deals);
+
+  } catch (error) {
+    console.error(error);
+
+    document.getElementById("affiliateGrid").innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:3rem 1rem;
+        color:var(--text-muted);
+        font-family:'Space Mono',monospace;
+      ">
+        Could not load affiliate deals.
+      </div>
+    `;
+  }
+}
+
+loadAffiliateDeals();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin | SESU's Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#0a0a0a; --void:#111111; --elevated:#1a1a1a; --white:#f5f0e8;
+    --gold:#d4af37; --gold-light:#e8c85a; --red:#c9372d; --green:#4caf50; --text-muted:#8a8a8a;
+    --border:rgba(212,175,55,0.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"DM Sans",sans-serif;background:var(--black);color:var(--white);line-height:1.5;padding-top:70px;}
+  a{text-decoration:none;color:inherit;}
+  .font-display{font-family:"Bebas Neue",sans-serif;}
+  .font-mono{font-family:"Space Mono",monospace;}
+  button{cursor:pointer;font-family:inherit;}
+
+  nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(10,10,10,.92);backdrop-filter:blur(12px);padding:1rem 1.5rem;}
+  .logo{font-size:1.4rem;letter-spacing:3px;color:var(--gold);}
+  .logo span{color:var(--white);}
+  .nav-links a{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-left:1.25rem;}
+  .nav-links a:hover{color:var(--gold);}
+
+  /* Lock screen */
+  #lockScreen{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+  .lock-card{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:2.5rem;max-width:360px;width:100%;text-align:center;}
+  .lock-card h1{font-family:"Bebas Neue",sans-serif;font-size:2rem;color:var(--gold);margin-bottom:.5rem;}
+  .lock-card p{color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem;}
+  .lock-card input{width:100%;background:var(--void);border:1px solid var(--border);color:var(--white);padding:.75rem;margin-bottom:1rem;border-radius:4px;font-size:1rem;text-align:center;letter-spacing:3px;}
+  .lock-card button{width:100%;background:var(--gold);color:#000;border:none;padding:.8rem;font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:2px;font-size:.75rem;border-radius:4px;}
+  .lock-error{color:var(--red);font-size:.8rem;min-height:1.2em;margin-top:.5rem;}
+  .lock-warn{margin-top:1.5rem;font-size:.7rem;color:var(--text-muted);border-top:1px solid var(--border);padding-top:1rem;}
+
+  /* Dashboard */
+  #dashboard{display:none;max-width:80rem;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .dash-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;}
+  .dash-head h1{font-family:"Bebas Neue",sans-serif;font-size:2.2rem;color:var(--gold);}
+  .logout-btn{background:none;border:1px solid var(--border);color:var(--text-muted);padding:.5rem .9rem;font-size:.7rem;text-transform:uppercase;letter-spacing:1px;border-radius:4px;}
+  .logout-btn:hover{color:var(--red);border-color:var(--red);}
+
+  .tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);}
+  .tab-btn{background:none;border:none;color:var(--text-muted);padding:.75rem 1rem;font-family:"Space Mono",monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid transparent;}
+  .tab-btn.active{color:var(--gold);border-color:var(--gold);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:2rem;}
+  @media(min-width:900px){.grid2{grid-template-columns:340px 1fr;}}
+
+  .panel{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:1.5rem;}
+  .panel h2{font-family:"Bebas Neue",sans-serif;font-size:1.3rem;color:var(--gold);margin-bottom:1rem;letter-spacing:1px;}
+
+  label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin:.75rem 0 .35rem;}
+  input, select, textarea{width:100%;background:var(--void);border:1px solid var(--border);color:var(--white);padding:.6rem;border-radius:4px;font-family:"DM Sans",sans-serif;font-size:.85rem;}
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--gold);}
+  .img-preview{margin-top:.6rem;width:100%;aspect-ratio:1.4;background:var(--void);border:1px dashed var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .img-preview img{width:100%;height:100%;object-fit:contain;padding:.5rem;}
+  .img-preview span{color:var(--text-muted);font-size:.75rem;}
+  .save-btn{width:100%;margin-top:1.25rem;background:var(--gold);color:#000;border:none;padding:.8rem;font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:2px;font-size:.75rem;border-radius:4px;}
+  .save-btn:hover{background:var(--gold-light);}
+  .form-msg{font-size:.75rem;margin-top:.6rem;min-height:1.1em;}
+  .form-msg.ok{color:var(--green);}
+  .form-msg.err{color:var(--red);}
+
+  table{width:100%;border-collapse:collapse;font-size:.85rem;}
+  th{text-align:left;font-family:"Space Mono",monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);padding:.6rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+  .table-wrap{overflow-x:auto;}
+  .p-thumb{width:42px;height:42px;object-fit:contain;background:var(--void);border-radius:4px;padding:.2rem;}
+  .p-name{font-weight:700;}
+  .p-cat{color:var(--text-muted);font-size:.75rem;}
+  .price-edit{display:flex;align-items:center;gap:.3rem;}
+  .price-edit button{width:24px;height:24px;background:var(--void);border:1px solid var(--border);color:var(--gold);border-radius:3px;}
+  .price-edit button:hover{background:rgba(212,175,55,.15);}
+  .price-val{font-family:"Space Mono",monospace;min-width:80px;text-align:center;}
+  .stock-pill{font-family:"Space Mono",monospace;font-size:.7rem;padding:.15rem .5rem;border-radius:10px;}
+  .stock-pill.ok{background:rgba(76,175,80,.15);color:var(--green);}
+  .stock-pill.low{background:rgba(201,55,45,.15);color:var(--red);}
+  .row-actions{display:flex;gap:.4rem;}
+  .icon-btn{background:none;border:1px solid var(--border);color:var(--text-muted);width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;}
+  .icon-btn:hover{color:var(--gold);border-color:var(--gold);}
+  .icon-btn.danger:hover{color:var(--red);border-color:var(--red);}
+  .empty-row{text-align:center;color:var(--text-muted);padding:2rem;}
+  .stat-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+  .stat-card{flex:1;min-width:140px;background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;}
+  .stat-card .num{font-family:"Bebas Neue",sans-serif;font-size:2rem;color:var(--gold);}
+  .stat-card .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="shop.html" class="logo font-display">SESU<span>'S</span> STORE</a>
+  <div class="nav-links font-mono">
+    <a href="shop.html">Shop</a><a href="contact.html">Contact</a><a href="index.html">Home</a>
+  </div>
+</nav>
+
+<section id="lockScreen">
+  <div class="lock-card">
+    <h1 class="font-display">ADMIN ACCESS</h1>
+    <p>Enter the store passcode to manage products.</p>
+    <input type="password" id="passcodeInput" placeholder="••••••" maxlength="20" />
+    <button onclick="tryLogin()" class="font-mono">Unlock Dashboard</button>
+    <p class="lock-error" id="lockError"></p>
+    <p class="lock-warn font-mono">Note: this is a lightweight client-side lock for casual protection only — it is not secure against a determined visitor. Don't use it to gate sensitive data.</p>
+  </div>
+</section>
+
+<section id="dashboard">
+<div class="dash-head">
+    <h1 class="font-display">STORE DASHBOARD</h1>
+    <button class="logout-btn font-mono" onclick="logout()">Log Out</button>
+</div>
+
+<div class="stat-row" id="statRow"></div>
+
+<div class="tabs">
+    <button class="tab-btn active font-mono" onclick="switchTab('products')">Store Products</button>
+    <button class="tab-btn font-mono" onclick="switchTab('affiliates')">Affiliate Ads</button>
+</div>
+
+<div class="tab-panel active" id="tab-products">
+    <div class="grid2">
+    <div class="panel">
+        <h2 id="prodFormTitle">Add Product</h2>
+        <form id="productForm">
+        <input type="hidden" id="p-id" />
+        <label>Product Name</label>
+        <input type="text" id="p-name" required placeholder="e.g. Pro Strike Boots" />
+
+        <label>Category</label>
+        <input type="text" id="p-category" required placeholder="e.g. Boots, Jerseys, Footballs" list="catList" />
+        <datalist id="catList"></datalist>
+
+        <label>Price (₦)</label>
+        <input type="number" id="p-price" required min="0" placeholder="e.g. 89999" />
+
+        <label>Old / Slashed Price (optional, ₦)</label>
+        <input type="number" id="p-oldprice" min="0" placeholder="e.g. 115000" />
+
+        <label>Stock Quantity</label>
+        <input type="number" id="p-stock" required min="0" placeholder="e.g. 12" />
+
+        <label>Badge (optional)</label>
+        <select id="p-badge">
+            <option value="">None</option>
+            <option>Trending</option>
+            <option>Best Seller</option>
+            <option>New</option>
+            <option>Low stock</option>
+        </select>
+
+        <label>Image URL</label>
+        <input type="url" id="p-image" required placeholder="https://..." oninput="previewImage()" />
+        <div class="img-preview" id="imgPreview"><span>Image preview</span></div>
+
+        <button type="submit" class="save-btn font-mono" id="prodSubmitBtn">Add Product</button>
+        <button type="button" class="save-btn font-mono" id="prodCancelBtn" style="display:none;background:transparent;border:1px solid var(--border);color:var(--text-muted);margin-top:.5rem;" onclick="resetProductForm()">Cancel Edit</button>
+        <p class="form-msg" id="prodMsg"></p>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Current Products</h2>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th></th><th>Product</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+            <tbody id="productTableBody"></tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="tab-panel" id="tab-affiliates">
+    <div class="grid2">
+    <div class="panel">
+        <h2 id="affFormTitle">Add Affiliate Ad</h2>
+        <form id="affiliateForm">
+        <input type="hidden" id="a-id" />
+        <label>Product Name</label>
+        <input type="text" id="a-name" required placeholder="e.g. Nike Mercurial Vapor" />
+
+        <label>Category</label>
+        <input type="text" id="a-category" required placeholder="e.g. Boots" />
+
+        <label>Display Price</label>
+        <input type="text" id="a-price" required placeholder="e.g. ₦120,000 or From $99" />
+
+        <label>Image URL</label>
+        <input type="url" id="a-image" required placeholder="https://..." oninput="previewAffImage()" />
+        <div class="img-preview" id="affImgPreview"><span>Image preview</span></div>
+
+        <label>Origin Store URL</label>
+        <input type="url" id="a-url" required placeholder="https://the-original-store.com/product" />
+
+        <button type="submit" class="save-btn font-mono" id="affSubmitBtn">Add Affiliate Ad</button>
+        <button type="button" class="save-btn font-mono" id="affCancelBtn" style="display:none;background:transparent;border:1px solid var(--border);color:var(--text-muted);margin-top:.5rem;" onclick="resetAffiliateForm()">Cancel Edit</button>
+        <p class="form-msg" id="affMsg"></p>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Current Affiliate Ads</h2>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th></th><th>Product</th><th>Price</th><th>Origin</th><th></th></tr></thead>
+            <tbody id="affiliateTableBody"></tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
+
+<sc>
+<script>
+let PRODUCTS = [];
+let AFFILIATES = [];
+
+/* =========================
+  API HELPER
+========================= */
+
+async function api(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        },
+        ...options
+    });
+
+    let data = {};
+
+    try {
+        data = await response.json();
+    } catch {
+        data = {};
+    }
+
+    if (!response.ok) {
+        throw new Error(data.error || "Request failed");
+    }
+
+    return data;
+}
+
+/* =========================
+  LOGIN
+========================= */
+
+async function tryLogin() {
+    const input = document.getElementById("passcodeInput");
+    const error = document.getElementById("lockError");
+
+    error.textContent = "";
+
+    try {
+        await api("/api/login", {
+            method: "POST",
+            body: JSON.stringify({
+                password: input.value
+            })
+        });
+
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+        await loadAll();
+    } catch (err) {
+        error.textContent = err.message || "Incorrect passcode.";
+    }
+}
+
+document
+    .getElementById("passcodeInput")
+    .addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            tryLogin();
+        }
+    });
+
+async function logout() {
+    try {
+        await api("/api/logout", {
+            method: "POST"
+        });
+    } finally {
+        location.reload();
+    }
+}
+
+/* =========================
+  SESSION CHECK
+========================= */
+
+async function checkSession() {
+    try {
+        const session = await api("/api/session");
+
+        if (session.authenticated) {
+            document.getElementById("lockScreen").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+
+            await loadAll();
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+/* =========================
+  TABS
+========================= */
+
+function switchTab(name) {
+    document
+        .querySelectorAll(".tab-btn")
+        .forEach(button => button.classList.remove("active"));
+
+    document
+        .querySelectorAll(".tab-panel")
+        .forEach(panel => panel.classList.remove("active"));
+
+    document
+        .querySelector(`.tab-btn[onclick="switchTab('${name}')"]`)
+        .classList.add("active");
+
+    document
+        .getElementById("tab-" + name)
+        .classList.add("active");
+}
+
+/* =========================
+  LOAD DATA
+========================= */
+
+async function getProducts() {
+    return await api("/api/products");
+}
+
+async function getAffiliates(){
+  return await api("/api/affiliates");
+}
+
+async function loadAll() {
+    try {
+        PRODUCTS = await getProducts();
+        AFFILIATES = await getAffiliates();
+
+        renderStats();
+        renderProductTable();
+        renderCatList();
+        renderAffiliateTable();
+    } catch (error) {
+        console.error(error);
+        alert("Could not load store data.");
+    }
+}
+
+/* =========================
+  STATS
+========================= */
+
+function renderStats() {
+    const lowStock = PRODUCTS.filter(
+        product => Number(product.stock) <= 4
+    ).length;
+
+    const totalValue = PRODUCTS.reduce(
+        (sum, product) => sum + Number(product.price),
+        0
+    );
+
+    document.getElementById("statRow").innerHTML = `
+        <div class="stat-card">
+            <div class="num">${PRODUCTS.length}</div>
+            <div class="lbl font-mono">Store Products</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="num">${lowStock}</div>
+            <div class="lbl font-mono">Low Stock Alerts</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="num">${AFFILIATES.length}</div>
+            <div class="lbl font-mono">Affiliate Ads</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="num">
+                ₦${Math.round(totalValue / 1000).toLocaleString()}k
+            </div>
+            <div class="lbl font-mono">Combined List Price</div>
+        </div>
+    `;
+}
+
+/* =========================
+  CATEGORY LIST
+========================= */
+
+function renderCatList() {
+    const categories = [
+        ...new Set(
+            PRODUCTS
+                .map(product => product.category)
+                .filter(Boolean)
+        )
+    ];
+
+    document.getElementById("catList").innerHTML =
+        categories
+            .map(category => `<option value="${escapeHtml(category)}">`)
+            .join("");
+}
+
+/* =========================
+  IMAGE PREVIEWS
+========================= */
+
+function previewImage() {
+    const url = document.getElementById("p-image").value;
+    const box = document.getElementById("imgPreview");
+
+    if (!url) {
+        box.innerHTML = "<span>Image preview</span>";
+        return;
+    }
+
+    box.innerHTML = `
+        <img
+            src="${escapeAttribute(url)}"
+            onerror="this.parentElement.innerHTML='<span>Couldn\\'t load image</span>'"
+        >
+    `;
+}
+
+function previewAffImage() {
+    const url = document.getElementById("a-image").value;
+    const box = document.getElementById("affImgPreview");
+
+    if (!url) {
+        box.innerHTML = "<span>Image preview</span>";
+        return;
+    }
+
+    box.innerHTML = `
+        <img
+            src="${escapeAttribute(url)}"
+            onerror="this.parentElement.innerHTML='<span>Couldn\\'t load image</span>'"
+        >
+    `;
+}
+
+/* =========================
+  PRODUCT TABLE
+========================= */
+
+function renderProductTable() {
+    const body = document.getElementById("productTableBody");
+
+    if (!PRODUCTS.length) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-row">
+                    No products yet. Add your first one.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    body.innerHTML = PRODUCTS.map(product => `
+        <tr>
+            <td>
+                <img
+                    class="p-thumb"
+                    src="${escapeAttribute(product.image)}"
+                    onerror="this.src='https://placehold.co/100x100/1a1a1a/d4af37?text=%3F'"
+                />
+            </td>
+
+            <td>
+                <div class="p-name">
+                    ${escapeHtml(product.name)}
+                </div>
+
+                <div class="p-cat">
+                    ${escapeHtml(product.category)}
+                </div>
+            </td>
+
+            <td>
+                <div class="price-edit">
+                    <button
+                        onclick="adjustPrice('${escapeAttribute(product.id)}', -1000)"
+                    >
+                        −
+                    </button>
+
+                    <span class="price-val">
+                        ₦${Number(product.price).toLocaleString()}
+                    </span>
+
+                    <button
+                        onclick="adjustPrice('${escapeAttribute(product.id)}', 1000)"
+                    >
+                        +
+                    </button>
+                </div>
+            </td>
+
+            <td>
+                <span class="stock-pill ${Number(product.stock) <= 4 ? "low" : "ok"}">
+                    ${Number(product.stock)} left
+                </span>
+            </td>
+
+            <td>
+                <div class="row-actions">
+                    <button
+                        class="icon-btn"
+                        title="Edit"
+                        onclick="editProduct('${escapeAttribute(product.id)}')"
+                    >
+                        ✎
+                    </button>
+
+                    <button
+                        class="icon-btn danger"
+                        title="Delete"
+                        onclick="deleteProduct('${escapeAttribute(product.id)}')"
+                    >
+                        🗑
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+/* =========================
+  PRICE ADJUSTMENT
+========================= */
+
+async function adjustPrice(id, delta) {
+    try {
+        const updated = await api(
+            `/api/products/${encodeURIComponent(id)}/price`,
+            {
+                method: "PATCH",
+                body: JSON.stringify({
+                    delta
+                })
+            }
+        );
+
+        const index = PRODUCTS.findIndex(product => product.id === id);
+
+        if (index !== -1) {
+            PRODUCTS[index] = updated;
+        }
+
+        renderProductTable();
+        renderStats();
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+/* =========================
+  EDIT PRODUCT
+========================= */
+
+function editProduct(id) {
+    const product = PRODUCTS.find(
+        item => item.id === id
+    );
+
+    if (!product) return;
+
+    document.getElementById("p-id").value = product.id;
+    document.getElementById("p-name").value = product.name;
+    document.getElementById("p-category").value = product.category;
+    document.getElementById("p-price").value = product.price;
+    document.getElementById("p-oldprice").value =
+        product.oldPrice || "";
+    document.getElementById("p-stock").value = product.stock;
+    document.getElementById("p-badge").value =
+        product.badge || "";
+    document.getElementById("p-image").value =
+        product.image;
+
+    previewImage();
+
+    document.getElementById("prodFormTitle").textContent =
+        "Edit Product";
+
+    document.getElementById("prodSubmitBtn").textContent =
+        "Save Changes";
+
+    document.getElementById("prodCancelBtn").style.display =
+        "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function resetProductForm() {
+    document.getElementById("productForm").reset();
+
+    document.getElementById("p-id").value = "";
+
+    document.getElementById("imgPreview").innerHTML =
+        "<span>Image preview</span>";
+
+    document.getElementById("prodFormTitle").textContent =
+        "Add Product";
+
+    document.getElementById("prodSubmitBtn").textContent =
+        "Add Product";
+
+    document.getElementById("prodCancelBtn").style.display =
+        "none";
+
+    document.getElementById("prodMsg").textContent = "";
+}
+
+/* =========================
+  DELETE PRODUCT
+========================= */
+
+async function deleteProduct(id) {
+    if (
+        !confirm(
+            "Delete this product? This cannot be undone."
+        )
+    ) {
+        return;
+    }
+
+    try {
+        await api(
+            `/api/products/${encodeURIComponent(id)}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        PRODUCTS = PRODUCTS.filter(
+            product => product.id !== id
+        );
+
+        renderProductTable();
+        renderStats();
+        renderCatList();
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+/* =========================
+  PRODUCT FORM
+========================= */
+
+document
+    .getElementById("productForm")
+    .addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const id =
+            document.getElementById("p-id").value;
+
+        const data = {
+            name: document
+                .getElementById("p-name")
+                .value
+                .trim(),
+
+            category: document
+                .getElementById("p-category")
+                .value
+                .trim(),
+
+            price: Number(
+                document.getElementById("p-price").value
+            ),
+
+            oldPrice:
+                document.getElementById("p-oldprice").value
+                    ? Number(
+                        document.getElementById("p-oldprice").value
+                    )
+                    : null,
+
+            stock: Number(
+                document.getElementById("p-stock").value
+            ),
+
+            badge:
+                document.getElementById("p-badge").value ||
+                null,
+
+            image: document
+                .getElementById("p-image")
+                .value
+                .trim()
+        };
+
+        const msgEl =
+            document.getElementById("prodMsg");
+
+        try {
+            let result;
+
+            if (id) {
+                result = await api(
+                    `/api/products/${encodeURIComponent(id)}`,
+                    {
+                        method: "PUT",
+                        body: JSON.stringify(data)
+                    }
+                );
+
+                const index = PRODUCTS.findIndex(
+                    product => product.id === id
+                );
+
+                if (index !== -1) {
+                    PRODUCTS[index] = result;
+                }
+
+                msgEl.textContent =
+                    "Product updated ✓";
+            } else {
+                result = await api("/api/products", {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                });
+
+                PRODUCTS.unshift(result);
+
+                msgEl.textContent =
+                    "Product added ✓";
+            }
+
+            msgEl.className = "form-msg ok";
+
+            resetProductForm();
+
+            renderProductTable();
+            renderStats();
+            renderCatList();
+
+        } catch (error) {
+            console.error(error);
+
+            msgEl.textContent =
+                error.message ||
+                "Something went wrong saving this product.";
+
+            msgEl.className =
+                "form-msg err";
+        }
+    });
+
+/* =========================
+  AFFILIATE TABLE
+========================= */
+
+function renderAffiliateTable() {
+    const body =
+        document.getElementById(
+            "affiliateTableBody"
+        );
+
+    if (!AFFILIATES.length) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-row">
+                    No affiliate ads yet.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    body.innerHTML = AFFILIATES.map(ad => `
+        <tr>
+            <td>
+                <img
+                    class="p-thumb"
+                    src="${escapeAttribute(ad.image)}"
+                    onerror="this.src='https://placehold.co/100x100/1a1a1a/d4af37?text=%3F'"
+                />
+            </td>
+
+            <td>
+                <div class="p-name">
+                    ${escapeHtml(ad.name)}
+                </div>
+
+                <div class="p-cat">
+                    ${escapeHtml(ad.category)}
+                </div>
+            </td>
+
+            <td class="font-mono">
+                ${escapeHtml(ad.price)}
+            </td>
+
+            <td>
+                <a
+                    href="${escapeAttribute(ad.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color:var(--gold);font-size:.75rem;"
+                >
+                    Visit ↗
+                </a>
+            </td>
+
+            <td>
+                <div class="row-actions">
+                    <button
+                        class="icon-btn"
+                        title="Edit"
+                        onclick="editAffiliate('${escapeAttribute(ad.id)}')"
+                    >
+                        ✎
+                    </button>
+
+                    <button
+                        class="icon-btn danger"
+                        title="Delete"
+                        onclick="deleteAffiliate('${escapeAttribute(ad.id)}')"
+                    >
+                        🗑
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+/* =========================
+  EDIT AFFILIATE
+========================= */
+
+function editAffiliate(id) {
+    const ad = AFFILIATES.find(
+        item => item.id === id
+    );
+
+    if (!ad) return;
+
+    document.getElementById("a-id").value = ad.id;
+    document.getElementById("a-name").value = ad.name;
+    document.getElementById("a-category").value =
+        ad.category;
+    document.getElementById("a-price").value = ad.price;
+    document.getElementById("a-image").value = ad.image;
+    document.getElementById("a-url").value = ad.url;
+
+    previewAffImage();
+
+    document.getElementById("affFormTitle").textContent =
+        "Edit Affiliate Ad";
+
+    document.getElementById("affSubmitBtn").textContent =
+        "Save Changes";
+
+    document.getElementById("affCancelBtn").style.display =
+        "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function resetAffiliateForm() {
+    document.getElementById("affiliateForm").reset();
+
+    document.getElementById("a-id").value = "";
+
+    document.getElementById("affImgPreview").innerHTML =
+        "<span>Image preview</span>";
+
+    document.getElementById("affFormTitle").textContent =
+        "Add Affiliate Ad";
+
+    document.getElementById("affSubmitBtn").textContent =
+        "Add Affiliate Ad";
+
+    document.getElementById("affCancelBtn").style.display =
+        "none";
+
+    document.getElementById("affMsg").textContent = "";
+}
+
+/* =========================
+  DELETE AFFILIATE
+========================= */
+
+async function deleteAffiliate(id) {
+    if (!confirm("Delete this affiliate ad?")) {
+        return;
+    }
+
+    try {
+        await api(
+            `/api/affiliates/${encodeURIComponent(id)}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        AFFILIATES = AFFILIATES.filter(
+            ad => ad.id !== id
+        );
+
+        renderAffiliateTable();
+        renderStats();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+/* =========================
+  AFFILIATE FORM
+========================= */
+
+document
+    .getElementById("affiliateForm")
+    .addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const id =
+            document.getElementById("a-id").value;
+
+        const data = {
+            name: document
+                .getElementById("a-name")
+                .value
+                .trim(),
+
+            category: document
+                .getElementById("a-category")
+                .value
+                .trim(),
+
+            price: document
+                .getElementById("a-price")
+                .value
+                .trim(),
+
+            image: document
+                .getElementById("a-image")
+                .value
+                .trim(),
+
+            url: document
+                .getElementById("a-url")
+                .value
+                .trim()
+        };
+
+        const msgEl =
+            document.getElementById("affMsg");
+
+        try {
+            let result;
+
+            if (id) {
+                result = await api(
+                    `/api/affiliates/${encodeURIComponent(id)}`,
+                    {
+                        method: "PUT",
+                        body: JSON.stringify(data)
+                    }
+                );
+
+                const index =
+                    AFFILIATES.findIndex(
+                        ad => ad.id === id
+                    );
+
+                if (index !== -1) {
+                    AFFILIATES[index] = result;
+                }
+
+                msgEl.textContent =
+                    "Affiliate ad updated ✓";
+
+            } else {
+                result = await api(
+                    "/api/affiliates",
+                    {
+                        method: "POST",
+                        body: JSON.stringify(data)
+                    }
+                );
+
+                AFFILIATES.unshift(result);
+
+                msgEl.textContent =
+                    "Affiliate ad added ✓";
+            }
+
+            msgEl.className = "form-msg ok";
+
+            resetAffiliateForm();
+
+            renderAffiliateTable();
+            renderStats();
+
+        } catch (error) {
+            console.error(error);
+
+            msgEl.textContent =
+                error.message ||
+                "Something went wrong saving this ad.";
+
+            msgEl.className =
+                "form-msg err";
+        }
+    });
+
+/* =========================
+  BASIC HTML ESCAPING
+========================= */
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+    return escapeHtml(value);
+}
+
+/* =========================
+  START
+========================= */
+
+checkSession();
+</script>
+</body>
+</html>
