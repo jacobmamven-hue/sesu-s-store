@@ -146,6 +146,92 @@ app.get("/api/products", async (req, res) => {
     }
 });
 
+/* Random selection for the "Trending Items" section */
+app.get("/api/products/trending", async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT
+                id,
+                name,
+                category,
+                price,
+                old_price AS oldPrice,
+                stock,
+                badge AS badgeText,
+                image
+            FROM products
+            ORDER BY RAND()
+            LIMIT 6
+        `);
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: "Could not load trending products"
+        });
+    }
+});
+
+/* Items discounted 30% or more for "Latest Offers" */
+app.get("/api/products/offers", async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT
+                id,
+                name,
+                category,
+                price,
+                old_price AS oldPrice,
+                stock,
+                badge AS badgeText,
+                image
+            FROM products
+            WHERE old_price IS NOT NULL
+                AND old_price > 0
+                AND ((old_price - price) / old_price) >= 0.30
+            ORDER BY ((old_price - price) / old_price) DESC
+        `);
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: "Could not load offers"
+        });
+    }
+});
+
+/* Items with stock below 20 for "Low In Stock" */
+app.get("/api/products/low-stock", async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT
+                id,
+                name,
+                category,
+                price,
+                old_price AS oldPrice,
+                stock,
+                badge AS badgeText,
+                image
+            FROM products
+            WHERE stock < 20
+            ORDER BY stock ASC
+        `);
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: "Could not load low-stock products"
+        });
+    }
+});
+
 app.post("/api/products", requireAdmin, async (req, res) => {
     try {
         const {

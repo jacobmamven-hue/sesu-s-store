@@ -94,11 +94,16 @@
       color: var(--foreground);
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
     .nav-links {
-      display: none;
+      list-style: none;
       align-items: center;
       gap: 2rem;
-      list-style: none;
     }
 
     .nav-links a {
@@ -111,6 +116,49 @@
 
     .nav-links a:hover {
       color: var(--primary);
+    }
+
+    /* Mobile nav: hidden dropdown panel toggled by hamburger button */
+    @media (max-width: 767px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+        background: var(--black);
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        font-size: 0.875rem;
+      }
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 2px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .nav-toggle svg {
+      width: 18px;
+      height: 18px;
     }
 
     .whatsapp-btn {
@@ -137,6 +185,9 @@
     @media (min-width: 768px) {
       .nav-links {
         display: flex;
+      }
+      .nav-toggle {
+        display: none;
       }
       nav {
         padding: 1rem 2.5rem;
@@ -434,6 +485,9 @@
       letter-spacing: 2px;
       color: var(--primary);
       transition: all 0.2s;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
     }
 
     .order-btn:hover {
@@ -469,6 +523,79 @@
     .carousel-btn svg {
       width: 1rem;
       height: 1rem;
+    }
+
+    /* Loading skeleton */
+    .skeleton-card {
+      flex: 0 0 100%;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      background: var(--card);
+      overflow: hidden;
+    }
+
+    @media (min-width: 640px) {
+      .skeleton-card { flex: 0 0 calc(50% - 0.5rem); }
+    }
+
+    @media (min-width: 1024px) {
+      .skeleton-card { flex: 0 0 calc(33.333% - 0.667rem); }
+    }
+
+    .skeleton-image {
+      aspect-ratio: 1;
+      background: linear-gradient(90deg, var(--void) 25%, #1f1f1f 37%, var(--void) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+
+    .skeleton-lines {
+      padding: 1.25rem;
+    }
+
+    .skeleton-line {
+      height: 0.75rem;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--void) 25%, #1f1f1f 37%, var(--void) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    .skeleton-line.short { width: 40%; }
+
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    /* Section state messages */
+    .section-state {
+      padding: 2.5rem 1rem;
+      text-align: center;
+      border: 1px dashed rgba(212, 175, 55, 0.25);
+      border-radius: 0.5rem;
+      color: var(--muted-foreground);
+      font-size: 0.875rem;
+    }
+
+    .section-state .retry-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--primary);
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: transparent;
+      cursor: pointer;
+      font-family: "Space Mono", monospace;
+      transition: all 0.2s;
+    }
+
+    .section-state .retry-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
     }
 
     /* Showcase */
@@ -587,20 +714,43 @@
       font-size: 0.75rem;
       color: var(--muted-foreground);
     }
+
+    .hidden-sm {
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .hidden-sm {
+        display: inline;
+      }
+    }
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted-foreground);
+    }
+    .whatsapp-link svg {
+      color: var(--whatsapp);
+    }
   </style>
 </head>
 <body>
   <nav>
     <a href="#home" class="logo font-display">SESU<span>'S</span> STORE</a>
-    <ul class="nav-links font-mono">
+    <ul class="nav-links font-mono" id="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <a href="https://wa.me/2348179849170?text=Hi%20SESU's%20Store%2C%20I'm%20interested%20in%20your%20products." target="_blank" rel="noopener noreferrer" class="whatsapp-btn font-mono">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-      <span class="hidden-sm">WhatsApp</span>
-    </a>
+    <div class="nav-right">
+      <a href="https://wa.me/2348179849170?text=Hi%20SESU's%20Store%2C%20I'm%20interested%20in%20your%20products." target="_blank" rel="noopener noreferrer" class="whatsapp-btn font-mono">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+        <span class="hidden-sm">WhatsApp</span>
+      </a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
   </nav>
 
   <section id="home" class="hero">
@@ -611,7 +761,7 @@
       <h1 class="hero-title font-display">WELCOME TO <span>SESU'S</span> STORE</h1>
       <p class="hero-sub">Your one-stop store for exclusive football gear. Boots, balls, and jerseys delivered with style.</p>
       <div class="hero-ctas">
-        <a href="#shop" class="btn-primary font-mono">
+        <a href="shop.html" class="btn-primary font-mono">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           Shop Now
         </a>
@@ -631,58 +781,9 @@
           <p class="section-subtitle font-mono">Most Wanted</p>
           <h2 class="section-title font-display">Trending Items</h2>
         </div>
-        <div class="carousel" id="trending-carousel">
-          <div class="carousel-track">
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-gold font-mono">Trending</span>
-                  <img src="https://images.unsplash.com/photo-1542487354-fe4a8c7895a6?auto=format&fit=crop&w=600&q=80" alt="Pro Strike Boots" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Football Boots</p>
-                  <h3 class="product-name font-mono">Pro Strike Boots</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦89,999</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Pro%20Strike%20Boots%20at%20%E2%82%A689%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-gold font-mono">Best Seller</span>
-                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Jerseys</p>
-                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦34,999</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-gold font-mono">New</span>
-                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Footballs</p>
-                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦24,999</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-controls">
+        <div class="carousel" id="trending-carousel" data-section="trending">
+          <div class="carousel-track" id="trending-track"></div>
+          <div class="carousel-controls" id="trending-controls" style="display:none;">
             <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('trending-carousel', -1)">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
             </button>
@@ -713,61 +814,9 @@
           <p class="section-subtitle font-mono">Save Big</p>
           <h2 class="section-title font-display">Latest Offers</h2>
         </div>
-        <div class="carousel" id="offers-carousel">
-          <div class="carousel-track">
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-primary font-mono">20% OFF</span>
-                  <img src="https://images.unsplash.com/photo-1542487354-fe4a8c7895a6?auto=format&fit=crop&w=600&q=80" alt="Pro Strike Boots" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Football Boots</p>
-                  <h3 class="product-name font-mono">Pro Strike Boots</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦89,999</span>
-                    <span class="price-old font-mono">₦115,000</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Pro%20Strike%20Boots%20at%20%E2%82%A689%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-primary font-mono">22% OFF</span>
-                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Footballs</p>
-                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦24,999</span>
-                    <span class="price-old font-mono">₦32,000</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-primary font-mono">22% OFF</span>
-                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Jerseys</p>
-                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦34,999</span>
-                    <span class="price-old font-mono">₦45,000</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-controls">
+        <div class="carousel" id="offers-carousel" data-section="offers">
+          <div class="carousel-track" id="offers-track"></div>
+          <div class="carousel-controls" id="offers-controls" style="display:none;">
             <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('offers-carousel', -1)">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
             </button>
@@ -785,42 +834,9 @@
           <p class="section-subtitle font-mono">Going Fast</p>
           <h2 class="section-title font-display">Low In Stock</h2>
         </div>
-        <div class="carousel" id="lowstock-carousel">
-          <div class="carousel-track">
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-danger font-mono">Low stock</span>
-                  <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" alt="Elysium Match Ball" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Footballs</p>
-                  <h3 class="product-name font-mono">Elysium Match Ball</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦24,999</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Elysium%20Match%20Ball%20at%20%E2%82%A624%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-card">
-              <div class="product-card">
-                <div class="product-image">
-                  <span class="badge badge-danger font-mono">Low stock</span>
-                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=600&q=80" alt="Aurea Black Jersey" loading="lazy" />
-                </div>
-                <div class="product-info">
-                  <p class="product-category font-mono">Jerseys</p>
-                  <h3 class="product-name font-mono">Aurea Black Jersey</h3>
-                  <div class="product-price">
-                    <span class="price-current font-display">₦34,999</span>
-                  </div>
-                  <a href="https://wa.me/2348179849170?text=Hi%2C%20I'm%20interested%20in%20buying%20the%20Aurea%20Black%20Jersey%20at%20%E2%82%A634%2C999." target="_blank" rel="noopener noreferrer" class="order-btn font-mono">Order Now</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-controls">
+        <div class="carousel" id="lowstock-carousel" data-section="lowstock">
+          <div class="carousel-track" id="lowstock-track"></div>
+          <div class="carousel-controls" id="lowstock-controls" style="display:none;">
             <button class="carousel-btn" aria-label="Previous" onclick="scrollCarousel('lowstock-carousel', -1)">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
             </button>
@@ -857,7 +873,7 @@
                 +234 810 561 4254
               </a>
             </li>
-            <li><span>Lagos, Nigeria</span></li>
+            <li><span>Abuja, Nigeria</span></li>
           </ul>
         </div>
       </div>
@@ -870,35 +886,193 @@
     </div>
   </footer>
 
-  <style>
-    .hidden-sm {
-      display: none;
+  <script>
+    /* =========================================================
+       CONFIG — points at this same server's own API routes.
+       Since server.js serves this page AND the /api routes from
+       the same Express app, we use a relative path (no CORS,
+       no separate domain needed).
+    */
+    const CONFIG = {
+      API_BASE_URL: "/api",
+      ENDPOINTS: {
+        trending: "/products/trending",
+        offers: "/products/offers",
+        lowstock: "/products/low-stock"
+      },
+      WHATSAPP_NUMBER: "2348179849170",
+      CURRENCY: "₦"
+    };
+
+    /* =========================================================
+       EXPECTED PRODUCT JSON SHAPE (per item in each endpoint's array)
+       =========================================================
+       {
+         "id": "prod_123",              // string, unique
+         "name": "Pro Strike Boots",    // string
+         "category": "Football Boots",  // string
+         "image": "https://.../img.jpg",// string (absolute URL)
+         "price": 89999,                // number, current price in NGN (no formatting)
+         "oldPrice": 115000,            // number|null — omit or null if not on offer
+         "badgeText": "Trending",       // string|null — optional custom badge label
+                                         //   (trending section defaults to "Trending" if omitted;
+                                         //    offers section auto-computes "% OFF" from price/oldPrice;
+                                         //    low-stock section defaults to "Low stock")
+         "stock": 3                     // number|null — optional, purely informational
+       }
+    */
+
+    function formatPrice(n) {
+      return CONFIG.CURRENCY + Number(n).toLocaleString("en-NG");
     }
-    @media (min-width: 640px) {
-      .hidden-sm {
-        display: inline;
+
+    function whatsappOrderUrl(product) {
+      const msg = `Hi, I'm interested in buying the ${product.name} at ${formatPrice(product.price)}.`;
+      return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function badgeFor(section, product) {
+      if (section === "offers" && product.oldPrice && product.oldPrice > product.price) {
+        const pct = Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100);
+        return { text: `${pct}% OFF`, cls: "badge-primary" };
+      }
+      if (section === "lowstock") {
+        return { text: product.badgeText || "Low stock", cls: "badge-danger" };
+      }
+      if (product.badgeText) {
+        return { text: product.badgeText, cls: "badge-gold" };
+      }
+      if (section === "trending") {
+        return { text: "Trending", cls: "badge-gold" };
+      }
+      return null;
+    }
+
+    function productCardHTML(section, product) {
+      const badge = badgeFor(section, product);
+      const badgeHTML = badge
+        ? `<span class="badge ${badge.cls} font-mono">${escapeHTML(badge.text)}</span>`
+        : "";
+      const oldPriceHTML =
+        product.oldPrice && product.oldPrice > product.price
+          ? `<span class="price-old font-mono">${formatPrice(product.oldPrice)}</span>`
+          : "";
+
+      return `
+        <div class="carousel-card">
+          <div class="product-card">
+            <div class="product-image">
+              ${badgeHTML}
+              <img src="${escapeAttr(product.image)}" alt="${escapeAttr(product.name)}" loading="lazy" />
+            </div>
+            <div class="product-info">
+              <p class="product-category font-mono">${escapeHTML(product.category || "")}</p>
+              <h3 class="product-name font-mono">${escapeHTML(product.name)}</h3>
+              <div class="product-price">
+                <span class="price-current font-display">${formatPrice(product.price)}</span>
+                ${oldPriceHTML}
+              </div>
+              <button type="button" class="order-btn font-mono" onclick="window.open('${whatsappOrderUrl(product)}', '_blank', 'noopener,noreferrer')">Order Now</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function escapeHTML(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+    function escapeAttr(str) {
+      return escapeHTML(str);
+    }
+
+    function skeletonHTML(count) {
+      let html = "";
+      for (let i = 0; i < count; i++) {
+        html += `
+          <div class="skeleton-card">
+            <div class="skeleton-image"></div>
+            <div class="skeleton-lines">
+              <div class="skeleton-line short"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+          </div>`;
+      }
+      return html;
+    }
+
+    function errorStateHTML(section, message) {
+      return `
+        <div class="section-state" style="flex: 1 1 100%;">
+          <p>${escapeHTML(message || "Couldn't load products right now.")}</p>
+          <button type="button" class="retry-btn" onclick="loadSection('${section}')">Retry</button>
+        </div>`;
+    }
+
+    function emptyStateHTML() {
+      return `<div class="section-state" style="flex: 1 1 100%;"><p>No products here yet — check back soon.</p></div>`;
+    }
+
+    async function loadSection(section) {
+      const track = document.getElementById(`${section}-track`);
+      const controls = document.getElementById(`${section}-controls`);
+      controls.style.display = "none";
+      track.innerHTML = skeletonHTML(3);
+
+      const path = CONFIG.ENDPOINTS[section];
+      const url = `${CONFIG.API_BASE_URL}${path}`;
+
+      try {
+        const res = await fetch(url, { headers: { Accept: "application/json" } });
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        const products = await res.json();
+
+        if (!Array.isArray(products) || products.length === 0) {
+          track.innerHTML = emptyStateHTML();
+          return;
+        }
+
+        track.innerHTML = products.map((p) => productCardHTML(section, p)).join("");
+        controls.style.display = "flex";
+      } catch (err) {
+        console.error(`Failed to load ${section} products:`, err);
+        track.innerHTML = errorStateHTML(section);
       }
     }
-    .whatsapp-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--muted-foreground);
-    }
-    .whatsapp-link svg {
-      color: var(--whatsapp);
-    }
-  </style>
 
-  <script>
     function scrollCarousel(id, direction) {
       const carousel = document.getElementById(id);
-      const track = carousel.querySelector('.carousel-track');
-      const card = carousel.querySelector('.carousel-card');
+      const track = carousel.querySelector(".carousel-track");
+      const card = carousel.querySelector(".carousel-card");
+      if (!card) return;
       const gap = 16;
       const scrollAmount = card.offsetWidth + gap;
-      track.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+      track.scrollBy({ left: scrollAmount * direction, behavior: "smooth" });
     }
+
+    /* Mobile nav toggle */
+    const navToggle = document.getElementById("nav-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    navToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSection("trending");
+      loadSection("offers");
+      loadSection("lowstock");
+    });
   </script>
 </body>
 </html>
