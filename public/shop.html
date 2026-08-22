@@ -216,9 +216,8 @@ async function saveProducts(list){
 
 async function init(){
   ALL_PRODUCTS = await getProducts();
-if(!ALL_PRODUCTS.length){
-  console.log("No products found in database.");
-}
+  if(!ALL_PRODUCTS.length){
+    console.log("No products found in database.");
   }
   buildCategoryUI();
   applyFilters();
