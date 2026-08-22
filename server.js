@@ -14,6 +14,11 @@ const PORT = process.env.PORT || 3000;
 DATABASE
 ========================= */
 
+console.log("DEBUG DB_HOST:", JSON.stringify(process.env.DB_HOST));
+console.log("DEBUG DB_PORT:", JSON.stringify(process.env.DB_PORT));
+console.log("DEBUG DB_USER:", JSON.stringify(process.env.DB_USER));
+console.log("DEBUG DB_NAME:", JSON.stringify(process.env.DB_NAME));
+
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
